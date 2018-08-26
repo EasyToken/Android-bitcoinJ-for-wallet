@@ -8,11 +8,12 @@ public class NetParams {
 
     public NetworkParameters getParams(String net){
 
-        switch (net){
-            case "testnet":
-                params = NetworkParameters.fromID("org.bitcoin.production");
-                return params;
-            case "production":
+        if (net.equals("production")) {
+            System.out.println("Prod");
+            params = NetworkParameters.fromID("org.bitcoin.production");
+            return params;
+        } else if (net.equals("testnet")){
+                System.out.println("Test");
                 params = NetworkParameters.fromID("org.bitcoin.test");
                 return params;
         }

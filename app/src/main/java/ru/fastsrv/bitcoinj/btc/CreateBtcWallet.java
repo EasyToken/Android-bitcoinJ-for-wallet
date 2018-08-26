@@ -35,39 +35,59 @@ public class CreateBtcWallet implements Interface {
         byte[] initialEntropy = new byte[16];
         secureRandom.nextBytes(initialEntropy);
 
-        // Init Network Parametrs
-        NetworkParameters params = getNetParams("production");
+        /**
+         * Network Parametrs
+         */
+        NetworkParameters params = getNetParams(net);
 
 
-        // Init Seed
+        /**
+         * Seed
+         */
         DeterministicSeed seed = new DeterministicSeed(initialEntropy,"",creationtime);
 
-        // Init Chain
-        DeterministicKeyChain chain = DeterministicKeyChain.builder().seed(seed).build();
+        /**
+         * KeyChain
+         */
+        DeterministicKeyChain keyChain = DeterministicKeyChain.builder().seed(seed).build();
 
-        // Init Path
+        /**
+         * keyPath
+         */
         List<ChildNumber> keyPath = HDUtils.parsePath(keypath);
 
-        DeterministicKey key = chain.getKeyByPath(keyPath, true);
+        DeterministicKey key = keyChain.getKeyByPath(keyPath, true);
         List<ECKey> ecKeys = (List<ECKey>) Collections.singletonList(key.decompress());
 
-        // Init seed Code
+        /**
+         * seed Code
+         */
         String seedCode=seed.getMnemonicCode().toString();
         seedCode=seedCode.replace(",","").replace("[","").replace("]","");
 
-        // Get Address
+        /**
+         * Get Address
+         */
         Address addressFromKey = key.toAddress(params);
 
-        // Init Wallet
+        /**
+         * Wallet
+         */
         Wallet wallet = new Wallet(params);
 
-        // Create wallet from Keys
+        /**
+         * Create wallet of Keys
+         */
         wallet.fromKeys(params, ecKeys);
 
-        // Add Chain to Wallet
-        wallet.addAndActivateHDChain(chain);
+        /**
+         * Add Chain to Wallet
+         */
+        wallet.addAndActivateHDChain(keyChain);
 
-        //Print to console
+        /**
+         * Output in log
+         */
         System.out.println("Wallet Address: "+ addressFromKey);
         System.out.println("Seed Code: "+seedCode);
 

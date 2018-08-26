@@ -28,7 +28,7 @@ public class ReadBtcWallet implements Interface {
     }
 
     public Map<String, String> ReadWallet(){
-        NetworkParameters params = getNetParams("production");
+        NetworkParameters params = getNetParams(net);
         Wallet wallet = new Wallet(params);
 
         try {
@@ -57,7 +57,9 @@ public class ReadBtcWallet implements Interface {
     }
 
     private File getWalletFile(){
-        // Получаем список файлов в Директории
+        /**
+         * Get list files in directory
+         */
         File[] listfiles = keyDir.listFiles();
         File file = new File(String.valueOf(listfiles[0]));
         System.out.println("Load Wallet File "+ file);

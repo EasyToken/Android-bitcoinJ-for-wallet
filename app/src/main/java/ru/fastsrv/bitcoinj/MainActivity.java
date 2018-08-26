@@ -13,6 +13,17 @@ import java.util.Map;
 import ru.fastsrv.bitcoinj.btc.CreateBtcWallet;
 import ru.fastsrv.bitcoinj.btc.ReadBtcWallet;
 
+/**
+ *
+ * @author Dmitry Markelov
+ * Telegram group: https://t.me/joinchat/D62dXAwO6kkm8hjlJTR9VA
+ *
+ * If you have any questions, I will answer the telegram
+ *
+ *
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     File dataDir;
@@ -50,14 +61,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void CreateWallet(){
 
-        // Проверяем есть ли кошельки
+        /**
+         * Checking if there are wallet
+         */
         File[] listfiles = keyDir.listFiles();
         if (listfiles.length == 0 ) {
             // Если в директории нет файла кошелька, добавляем кошелек
+            /**
+             * ir not, create wallet
+             */
             CreateBtcWallet createBtcWallet = new CreateBtcWallet(keyDir);
             messageToast(createBtcWallet.Bip39());
         } else {
-            // Если кошелек присутствует Загружаем данные
+
+            /**
+             * If the wallet is present, loading the data
+             */
             ReadBtcWallet readBtcWallet = new ReadBtcWallet(keyDir);
             Map<String,String> result = readBtcWallet.ReadWallet();
             tv_address.setText(result.get("address"));
