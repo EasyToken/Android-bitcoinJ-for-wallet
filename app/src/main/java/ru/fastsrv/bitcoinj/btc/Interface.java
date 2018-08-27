@@ -8,7 +8,7 @@ public interface Interface {
 
     String keypath = "44H/0H/0H/0/0";
 
-    String net = "testnet";
+    String net = "production";
     
     NetworkParameters getNetParams(String net);
 }

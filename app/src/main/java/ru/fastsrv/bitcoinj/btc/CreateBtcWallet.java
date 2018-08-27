@@ -32,6 +32,8 @@ public class CreateBtcWallet implements Interface {
     }
 
     public String Bip39(){
+        System.out.println("Creating");
+
         byte[] initialEntropy = new byte[16];
         secureRandom.nextBytes(initialEntropy);
 
@@ -91,7 +93,9 @@ public class CreateBtcWallet implements Interface {
         System.out.println("Wallet Address: "+ addressFromKey);
         System.out.println("Seed Code: "+seedCode);
 
-        // Save Wallet to file
+        /**
+         * Save Wallet to file
+         */
         String fileName = addressFromKey.toString()+".dat";
         saveWallet(wallet, fileName);
 

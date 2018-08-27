@@ -12,6 +12,7 @@ import java.util.Map;
 
 import ru.fastsrv.bitcoinj.btc.CreateBtcWallet;
 import ru.fastsrv.bitcoinj.btc.ReadBtcWallet;
+import ru.fastsrv.bitcoinj.btc.RecoveryBtcWallet;
 
 /**
  *
@@ -40,17 +41,20 @@ public class MainActivity extends AppCompatActivity {
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_balance = (TextView) findViewById(R.id.tv_balance);
 
+        et_seedcode = (EditText) findViewById(R.id.et_seedcode);
+
         dataDir = this.getExternalFilesDir("/bitcoin/keystore/");
         keyDir = new File(dataDir.getAbsolutePath());
+
     }
 
     public void onClick(View v){
         switch (v.getId()){
             case R.id.btn_create:
-                System.out.println("Creating");
                 CreateWallet();
                 break;
             case R.id.btn_recovery:
+                RecoveryWallet();
                 break;
             case R.id.btn_btctransaction:
                 break;
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void CreateWallet(){
+    private void CreateWallet(){
 
         /**
          * Checking if there are wallet
@@ -83,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             tv_balance.setText(result.get("balance"));
             messageToast(result.get("seedcode"));
         }
+    }
+
+    public void RecoveryWallet(){
+        RecoveryBtcWallet recoveryBtcWallet = new RecoveryBtcWallet(keyDir);
+        String address = recoveryBtcWallet.recoveryWallet(et_seedcode.getText().toString());
+        messageToast(address);
     }
 
     private void messageToast(String message){
